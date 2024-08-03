@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import Home from './components/Home';
+import Profile from './components/Profile';
+import Settings from './components/Settings';
 import './App.css';
 
-function App() {
+const App = () => {
+  const [selectedPage, setSelectedPage] = useState('home');
+
+  const renderContent = () => {
+    switch (selectedPage) {
+      case 'profile':
+        return <Profile />;
+      case 'settings':
+        return <Settings />;
+      default:
+        return <Home />;
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Sidebar onSelect={setSelectedPage} />
+      <div className="main-content">
+        {renderContent()}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
